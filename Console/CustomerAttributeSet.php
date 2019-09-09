@@ -8,8 +8,7 @@
 namespace Emartech\Attributes\Console;
 
 use Magento\Customer\Api\CustomerRepositoryInterface;
-use Magento\Eav\Setup\EavSetup;
-use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Customer\Model\CustomerFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -28,17 +27,24 @@ class CustomerAttributeSet extends Command
     private $customerRepository;
 
     /**
+     * @var CustomerFactory
+     */
+    private $customerFactory;
+
+    /**
      * CustomerAttributeSet constructor.
      *
-     * @param string|null                 $name
      * @param CustomerRepositoryInterface $customerRepository
+     * @param string|null                 $name
      */
     public function __construct(
-        string $name = null,
-        CustomerRepositoryInterface $customerRepository
+        CustomerRepositoryInterface $customerRepository,
+        CustomerFactory $customerFactory,
+        string $name = null
     ) {
-        parent::__construct($name);
         $this->customerRepository = $customerRepository;
+        $this->customerFactory = $customerFactory;
+        parent::__construct($name);
     }
 
     protected function configure()
@@ -82,8 +88,8 @@ class CustomerAttributeSet extends Command
         $attribute = $input->getOption('attribute_name');
         $value = $input->getOption('attribute_value');
 
-        $customer = $this->customerRepository->getById($customerId);
-        $customer->setAttribute($attribute, $value);
-        $customer->save();
+        $customer = $this->customerFactory->create()->load($customerId)->getDataModel();
+        $customer->setCustomAttribute($attribute, $value);
+        $this->customerRepository->save($customer);
     }
 }
