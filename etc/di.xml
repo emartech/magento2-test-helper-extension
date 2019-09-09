@@ -5,6 +5,7 @@
             <argument name="commands" xsi:type="array">
                 <item name="emartech_attribute_create" xsi:type="object">Emartech\Attributes\Console\AttributeCreate</item>
                 <item name="emartech_attribute_remove" xsi:type="object">Emartech\Attributes\Console\AttributeRemove</item>
+                <item name="emartech_customer_attribute_set" xsi:type="object">Emartech\Attributes\Console\CustomerAttributeSet</item>
             </argument>
         </arguments>
     </type>
