@@ -8,6 +8,7 @@
 namespace Emartech\Attributes\Console;
 
 use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Framework\App\State;
 use Magento\Customer\Model\CustomerFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Symfony\Component\Console\Command\Command;
@@ -32,6 +33,11 @@ class CustomerAttributeSet extends Command
     private $customerFactory;
 
     /**
+     * @var State
+     */
+    private $appState;
+
+    /**
      * CustomerAttributeSet constructor.
      *
      * @param CustomerRepositoryInterface $customerRepository
@@ -39,9 +45,11 @@ class CustomerAttributeSet extends Command
      */
     public function __construct(
         CustomerRepositoryInterface $customerRepository,
-        CustomerFactory $customerFactory,
+	    CustomerFactory $customerFactory,
+	    State $appState,
         string $name = null
     ) {
+	    $this->appState = $appState;
         $this->customerRepository = $customerRepository;
         $this->customerFactory = $customerFactory;
         parent::__construct($name);
@@ -84,6 +92,7 @@ class CustomerAttributeSet extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+	    $this->appState->setAreaCode('frontend');
         $customerId = $input->getOption('customer_id');
         $attribute = $input->getOption('attribute_name');
         $value = $input->getOption('attribute_value');
