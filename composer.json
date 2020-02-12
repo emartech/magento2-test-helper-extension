@@ -1,6 +1,6 @@
 {
-  "name": "emartech/attributes-magento2-extension",
-  "description": "Magento2 Create test attributes",
+  "name": "emartech/magento2-test-helper",
+  "description": "Magento2 Test helper commands",
   "license": "proprietary",
   "require": {
     "php": ">7.0.1"
