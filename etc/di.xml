@@ -8,6 +8,7 @@
                 <item name="emartech_customer_attribute_set" xsi:type="object">Emartech\Attributes\Console\CustomerAttributeSet</item>
                 <item name="emartech_test_store_create" xsi:type="object">Emartech\Attributes\Console\StoreCreate</item>
                 <item name="emartech_test_set_price_scope" xsi:type="object">Emartech\Attributes\Console\PriceScopeChange</item>
+                <item name="emartech_create_custom_status" xsi:type="object">Emartech\Attributes\Console\CreateCustomOrderStatus</item>
             </argument>
         </arguments>
     </type>
