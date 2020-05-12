@@ -47,19 +47,25 @@ class CreateCustomOrderStatus extends Command
     {
         $this
             ->setName('emartech:custom_order_status:create')
-            ->setDescription('Create a custom order status with complete state use --status_name [slug type name] --status_label [Status Label]')
+            ->setDescription('Create a custom order status with complete state use --status_id [slug type id] --status_label [Status Label] --state_id [state id]')
             ->setDefinition([
                 new InputOption(
-                    'status_name',
+                    'status_id',
                     null,
                     InputOption::VALUE_REQUIRED,
-                    'status name'
+                    'status id'
                 ),
                 new InputOption(
                     'status_label',
                     null,
                     InputOption::VALUE_REQUIRED,
                     'status label'
+                ),
+                new InputOption(
+                    'state_id',
+                    null,
+                    InputOption::VALUE_REQUIRED,
+                    'state id'
                 )
             ]);
 
@@ -80,7 +86,7 @@ class CreateCustomOrderStatus extends Command
         /** @var Status $status */
         $status = $this->statusFactory->create();
         $status->setData([
-            'status' => $input->getOption('status_name'),
+            'status' => $input->getOption('status_id'),
             'label' => $input->getOption('status_label'),
         ]);
         try {
@@ -88,6 +94,6 @@ class CreateCustomOrderStatus extends Command
         } catch (AlreadyExistsException $exception) {
             return;
         }
-        $status->assignState(self::ORDER_STATE_COMPLETE, false, true);
+        $status->assignState($input->getOption('state_id'), false, true);
     }
 }
